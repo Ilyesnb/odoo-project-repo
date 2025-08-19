@@ -1,0 +1,188 @@
+<odoo>
+    <data>
+        <record id="book_form_view"
+            model="ir.ui.view">
+            <field name="name">book.form.view</field>
+            <field name="model">my_books.book</field>
+            <field name="arch"
+                type="xml">
+                <form string="Book">
+                    <header>
+                        <field name="status"
+                            invisible ="1" />
+                        <field name="status"
+                            widget="statusbar" />
+                        <button string="Afficher ID"
+                            name="afficherId"
+                            type="object"
+                            class="oe_highlight" />
+                        <button name="sale.action_orders"
+                            type="action"
+                            string="Commandes"
+                            class="btn-secondary" />
+
+                        <!-- changement de statut -->
+                        <button name="action_set_in_progress"
+                            type="object"
+                            string="Marquer En Cours"
+                            class="btn-primary"
+
+                            invisible = "status == 'in_progress'"/>
+
+                        <button name="action_set_done"
+                            type="object"
+                            string="Terminer"
+                            class="btn-success"
+
+                            invisible = "status == 'done'" />
+
+                        <button name="action_cancel"
+                            type="object"
+                            string="Annuler"
+                            class="btn-danger"
+
+                            invisible = "status in ['cancel','done']" />
+                    </header>
+                    <sheet>
+                        <!-- Smart Buttons -->
+                        <div class="oe_button_box"
+                            name="button_box">
+                            <button type="object"
+                                name="action_view_book_sales"
+                                class="oe_stat_button"
+                                icon="fa-book">
+                                <field name="book_sales_count"
+                                    widget="statinfo"
+                                    string="Ventes" />
+                            </button>
+                        </div>
+                        <group colspan="2">
+                            <group string="Information">
+                                <field name="name" />
+                                <field name="editable_date" />
+                                <field name="description" />
+                                <field name="image" />
+                            </group>
+
+                            <group string="Générale">
+                                <field name="date_publication" />
+                                <field name="type_book" />
+                                <field name="author_new" />
+                                <field name="author_3"
+                                    widget="many2many_tags" />
+                                <field name="contact"
+                                    widget="many2many_tags" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="name"
+                                string="Page 1">
+
+                            </page>
+                            <page name="name"
+                                string="Page 2">
+
+                            </page>
+                            <page name="name"
+                                string="Page 3">
+
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                    <!-- Chatter -->
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                    <!--
+                    <div class="row">
+                        <div class="col-6">
+                            <group string="Information">
+                                <field name="editable_date" />
+                                <field name="description" />
+                                <field name="image" />
+                            </group>
+                        </div>
+                        <div class="col-6">
+                            <group string="Générale">
+                                <field name="date_publication" />
+                                <field name="type_book" />
+                                <field name="author_new" />
+                                <field name="author_3" />
+                                <field name="contact" />
+                            </group>
+                        </div>
+                    </div> -->
+                </form>
+            </field>
+        </record>
+
+        <record id="book_tree_view"
+            model="ir.ui.view">
+            <field name="name">book.tree.view</field>
+            <field name="model">my_books.book</field>
+            <field name="arch"
+                type="xml">
+                <tree string="Livres"
+                    decoration-danger="status == 'cancel'"
+                    decoration-success="status == 'done'"
+                    decoration-info="status == 'in_progress'"
+                    editable="top"
+                    create="1"
+                    delete="1"
+                    multi_edit="1"
+                    open_form_view="True">
+
+                    <field name="name" />
+                    <field name="type_book" />
+                    <field name="date_publication" />
+                    <field name="status" />
+                    <field name="book_sales_count"
+                        widget="badge" />
+                    <field name="author_3"
+                        widget="many2many_tags"
+                        optional="hide" />
+                    <field name="image"
+                        widget="image"
+                        options="{'size': [32, 32]}"
+                        optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="book_search_view"
+            model="ir.ui.view">
+            <field name="name">book.search.view</field>
+            <field name="model">my_books.book</field>
+            <field name="arch"
+                type="xml">
+                <search string="Recherche Livres">
+                    <field name="name" />
+                    <field name="type_book" />
+                    <field name="author_new" />
+                    <field name="date_publication" />
+                    <filter name="filter_done"
+                        string="Terminés"
+                        domain="[('status','=','done')]" />
+                    <filter name="filter_draft"
+                        string="brouillon"
+                        domain="[('status','=','draft')]" />
+                    <filter name="filter_in_progress"
+                        string="En cours"
+                        domain="[('status','=','in_progress')]" />
+                    <filter name="filter_canceled"
+                        string="Annulés"
+                        domain="[('status','=','cancel')]" />
+                </search>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

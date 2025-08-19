@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_my_books_book,my_books.book,model_my_books_book,base.group_user,1,0,0,0
+access_my_books_book_manager,my_books.book_manager,model_my_books_book,base.group_system,1,1,1,1
+access_my_books_sale_order_manager,my_books.sale_order_manager,model_sale_order,base.group_user,1,1,1,1

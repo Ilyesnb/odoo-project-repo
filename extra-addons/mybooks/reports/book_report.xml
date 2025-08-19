@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="action_report_books-pdf" model="ir.actions.report">
+        <field name="name">Livre</field>
+        <field name="model">my_books.book</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">mybooks.my_books_pdf</field>
+        <field name="binding_model_id" ref="mybooks.model_my_books_book" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="my_books_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h1>Rapport du Livre</h1>
+                        <p>
+                            <strong>Nom :</strong>
+                            <t t-esc="doc.name" />
+                        </p>
+                        <p>
+                            <strong>Auteur :</strong>
+                            <t t-esc="doc.author_new.name" />
+                        </p>
+                        <p>
+                            <strong>Type de livre :</strong>
+                            <t t-esc="doc.type_book" />
+                        </p>
+                        <t t-if="doc.description">
+                            <p>
+                                <strong>Description :</strong>
+                                <t t-esc="doc.description" />
+                            </p>
+                        </t>
+                        <p>
+                            <strong>Date de publication :</strong>
+                            <t t-esc="doc.date_publication" />
+                        </p>
+
+                        <p>
+                            <strong>Nombre de ventes :</strong>
+                            <t t-esc="doc.book_sales_count" />
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
